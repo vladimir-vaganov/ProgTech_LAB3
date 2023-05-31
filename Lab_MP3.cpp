@@ -11,8 +11,6 @@
 
 using namespace std;
 
-
-
 unsigned int hash1(string key){
     unsigned int ans = 1;
     for (int i = 0; i < key.size(); i++)
@@ -422,37 +420,32 @@ public:
     }
 };
 
-void printtable(HashTable1 A){
-    int counter = 0;
-
-    for (int i = 0; i < 20000; i++)
-        if (A.table[i] != nullptr){
-            unsigned int n = A.sizes[i];
-            for (int j = 0; j < n; j++){
-                cout << A.table[i][j];
-                counter++;
-            }
-        }
-
-    cout << counter << endl;
-}
-
-pair <Prepod*, unsigned int> findWithHashTable(HashTable1 hashTable, string key){
+Prepod findWithHashTable(HashTable1 hashTable, string key){
     unsigned int hash = hash1(key);
 
     if (hashTable.table[hash] == nullptr)
-        return make_pair(nullptr, 0);
+        return Prepod();
     else
-        return make_pair(hashTable.table[hash], hashTable.sizes[hash]);
+    {
+        for (int i = 0; i < hashTable.sizes[hash]; i++)
+            if (hashTable.table[hash][i].getFname() == key)
+                return hashTable.table[hash][i];
+        return Prepod();
+    }
 }
 
-pair <Prepod*, unsigned int> findWithHashTable(HashTable2 hashTable, string key){
+Prepod findWithHashTable(HashTable2 hashTable, string key){
     unsigned int hash = hash2(key);
 
     if (hashTable.table[hash] == nullptr)
-        return make_pair(nullptr, 0);
+        return Prepod();
     else
-        return make_pair(hashTable.table[hash], hashTable.sizes[hash]);
+    {
+        for (int i = 0; i < hashTable.sizes[hash]; i++)
+            if (hashTable.table[hash][i].getFname() == key)
+                return hashTable.table[hash][i];
+        return Prepod();
+    }
 }
 
 
